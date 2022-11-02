@@ -37,7 +37,6 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      minLength: [8, 'Password too short'],
     },
     terms: {
       type: Boolean,
@@ -46,7 +45,7 @@ const userSchema = new Schema(
     },
     mode: {
       type: String,
-      required: true,
+      required: false,
       default: 'customer',
     },
     city: {
