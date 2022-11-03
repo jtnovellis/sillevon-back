@@ -102,6 +102,7 @@ const updateUserDataHandler = async (req, res) => {
         city: user.city,
         location: user.location,
         skills: user.skills,
+        favoriteGenres: user.favoriteGenres,
       },
     });
   } catch (e) {

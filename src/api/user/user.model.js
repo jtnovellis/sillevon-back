@@ -76,6 +76,7 @@ const userSchema = new Schema(
       versatility: Number,
       instrumentation: Number,
     },
+    favoriteGenres: [{}],
   },
   {
     timestamps: true,
