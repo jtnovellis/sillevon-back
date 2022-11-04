@@ -1,4 +1,5 @@
 const { Schema, model, models } = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 /* const passwordRegex =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
@@ -90,6 +91,7 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.plugin(mongoosePaginate);
 const User = model('User', userSchema);
 
 module.exports = User;

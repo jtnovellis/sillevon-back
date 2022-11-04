@@ -35,10 +35,35 @@ function dataOfUser(id) {
   });
 }
 
+function allArtistsUser(limit, page) {
+  return User.paginate(
+    { mode: 'artist/band' },
+    {
+      limit: parseInt(limit) || 10,
+      page: parseInt(page) || 1,
+    }
+  );
+}
+
+function oneUser(email) {
+  return User.findOne({ email }).populate({
+    path: 'posts',
+    populate: [
+      {
+        path: 'comments',
+        model: 'Comment',
+        populate: [{ path: 'author', model: 'User' }],
+      },
+    ],
+  });
+}
+
 module.exports = {
   signUp,
   dataOfUser,
   signIn,
   updateUserPhotos,
   updateUserData,
+  oneUser,
+  allArtistsUser,
 };
