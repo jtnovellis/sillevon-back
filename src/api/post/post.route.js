@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.post('/new', authenticate, formData, createPostHandler);
 router.get('/user-posts', authenticate, getPostsByUserHandler);
-router.put('/update', authenticate, updatePostHandler);
+router.put('/update/:postId', authenticate, updatePostHandler);
 
 module.exports = router;

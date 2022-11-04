@@ -1,5 +1,6 @@
 const { createPost, getPostsByUser, updatePost } = require('./post.service');
 const User = require('../user/user.model');
+const Post = require('./post.model');
 
 async function createPostHandler(req, res) {
   try {
@@ -29,7 +30,7 @@ async function updatePostHandler(req, res) {
   try {
     const data = req.body;
     const { postId } = req.params;
-    const post = updatePost(postId, data);
+    const post = await updatePost(postId, data);
     return res.status(200).json({ message: 'Posts updated', data: post });
   } catch (e) {
     return res.status(400).json({ message: 'Post not updated', data: e });

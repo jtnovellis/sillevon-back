@@ -4,6 +4,6 @@ const { authenticate } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.post('/new', authenticate, createCommentHandler);
+router.post('/new/:postId', authenticate, createCommentHandler);
 
 module.exports = router;
