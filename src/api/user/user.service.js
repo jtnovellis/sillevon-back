@@ -22,4 +22,23 @@ const updateUserData = (id, data) => {
   return User.findByIdAndUpdate(id, data, { new: true });
 };
 
-module.exports = { signUp, signIn, updateUserPhotos, updateUserData };
+function dataOfUser(id) {
+  return User.findById(id).populate({
+    path: 'posts',
+    populate: [
+      {
+        path: 'comments',
+        model: 'Comment',
+        populate: [{ path: 'author', model: 'User' }],
+      },
+    ],
+  });
+}
+
+module.exports = {
+  signUp,
+  dataOfUser,
+  signIn,
+  updateUserPhotos,
+  updateUserData,
+};

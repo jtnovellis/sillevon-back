@@ -51,6 +51,9 @@ const userSchema = new Schema(
     city: {
       type: String,
     },
+    price: {
+      type: Number,
+    },
     imagesDone: {
       avatar: {
         type: String,
@@ -77,6 +80,9 @@ const userSchema = new Schema(
       instrumentation: Number,
     },
     favoriteGenres: [{}],
+    posts: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+    },
   },
   {
     timestamps: true,

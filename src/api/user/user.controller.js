@@ -2,10 +2,21 @@ const {
   signIn,
   signUp,
   updateUserPhotos,
+  dataOfUser,
   updateUserData,
 } = require('./user.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+async function dataOfUserHandler(req, res) {
+  try {
+    const id = req.user;
+    const user = await dataOfUser(id);
+    return res.status(200).json({ message: 'User found', data: user });
+  } catch (e) {
+    return res.status(400).json({ message: 'User not found', data: e });
+  }
+}
 
 const signUpHandle = async (req, res) => {
   const userData = req.body;
@@ -114,6 +125,7 @@ const updateUserDataHandler = async (req, res) => {
 
 module.exports = {
   signInHandle,
+  dataOfUserHandler,
   signUpHandle,
   updatePhotoshandler,
   updateUserDataHandler,
