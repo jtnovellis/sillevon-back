@@ -1,11 +1,24 @@
 const {
   signIn,
   signUp,
+  oneUser,
   updateUserPhotos,
+  dataOfUser,
   updateUserData,
+  allArtistsUser,
 } = require('./user.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+async function dataOfUserHandler(req, res) {
+  try {
+    const id = req.user;
+    const user = await dataOfUser(id);
+    return res.status(200).json({ message: 'User found', data: user });
+  } catch (e) {
+    return res.status(400).json({ message: 'User not found', data: e });
+  }
+}
 
 const signUpHandle = async (req, res) => {
   const userData = req.body;
@@ -112,9 +125,32 @@ const updateUserDataHandler = async (req, res) => {
   }
 };
 
+async function allArtistsUserHandler(req, res) {
+  const { limit, page } = req.query;
+  try {
+    const artists = await allArtistsUser(limit, page);
+    return res.status(200).json({ message: 'Arists found', data: artists });
+  } catch (e) {
+    return res.status(400).json({ message: 'Arists found', data: e });
+  }
+}
+
+async function oneUserHandler(req, res) {
+  const { email } = req.params;
+  try {
+    const user = await oneUser(email);
+    return res.status(200).json({ message: 'User Found', data: user });
+  } catch (e) {
+    return res.status(400).json({ message: 'User not Found', data: e });
+  }
+}
+
 module.exports = {
   signInHandle,
+  oneUserHandler,
+  dataOfUserHandler,
   signUpHandle,
   updatePhotoshandler,
   updateUserDataHandler,
+  allArtistsUserHandler,
 };

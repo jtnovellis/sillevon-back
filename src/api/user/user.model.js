@@ -1,4 +1,5 @@
 const { Schema, model, models } = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 /* const passwordRegex =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
@@ -51,6 +52,9 @@ const userSchema = new Schema(
     city: {
       type: String,
     },
+    price: {
+      type: Number,
+    },
     imagesDone: {
       avatar: {
         type: String,
@@ -77,6 +81,9 @@ const userSchema = new Schema(
       instrumentation: Number,
     },
     favoriteGenres: [{}],
+    posts: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+    },
   },
   {
     timestamps: true,
@@ -84,6 +91,7 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.plugin(mongoosePaginate);
 const User = model('User', userSchema);
 
 module.exports = User;
