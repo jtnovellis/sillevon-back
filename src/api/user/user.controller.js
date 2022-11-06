@@ -3,6 +3,7 @@ const {
   signUp,
   oneUser,
   updateUserPhotos,
+  filteredArtist,
   dataOfUser,
   updateUserData,
   allArtistsUser,
@@ -145,11 +146,33 @@ async function oneUserHandler(req, res) {
   }
 }
 
+async function filteredArtistHandler(req, res) {
+  const { city, limit, page, price, instrument, genre } = req.query;
+  try {
+    const artists = await filteredArtist(city, limit, page, instrument, genre);
+    if (price) {
+      const priceParsed = JSON.parse(price);
+      const byPrice = artists.docs.filter(
+        (artist) =>
+          artist.price >= priceParsed[0] && artist.price <= priceParsed[1]
+      );
+      return res
+        .status(200)
+        .json({ message: 'Artist found', data: { docs: byPrice } });
+    } else {
+      return res.status(200).json({ message: 'Artist found', data: artists });
+    }
+  } catch (e) {
+    return res.status(400).json({ message: 'Artists not found', data: e });
+  }
+}
+
 module.exports = {
   signInHandle,
   oneUserHandler,
   dataOfUserHandler,
   signUpHandle,
+  filteredArtistHandler,
   updatePhotoshandler,
   updateUserDataHandler,
   allArtistsUserHandler,
