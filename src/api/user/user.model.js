@@ -55,6 +55,8 @@ const userSchema = new Schema(
     price: {
       type: Number,
     },
+    instrument: String,
+    genre: String,
     imagesDone: {
       avatar: {
         type: String,
