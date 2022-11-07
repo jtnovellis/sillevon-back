@@ -7,7 +7,7 @@
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "test:coverage": "test -- --coverage",
     "dev": "NODE_ENV=development node --watch src/index.js",
-    "start": "NODE_ENV=production src/index.js"
+    "start": "NODE_ENV=production node src/index.js"
   },
   "repository": {
     "type": "git",

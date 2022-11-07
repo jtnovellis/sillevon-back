@@ -23,18 +23,21 @@ const updateUserData = (id, data) => {
 };
 
 function dataOfUser(id) {
-  return User.findById(id).populate({
-    path: 'posts',
-    populate: [
-      {
-        path: 'comments',
-        model: 'Comment',
-        populate: [{ path: 'author', model: 'User' }],
-      },
-    ],
-    path: 'connections',
-    populate: [{ path: 'userA' }, { path: 'userB' }],
-  });
+  return User.findById(id)
+    .populate({
+      path: 'posts',
+      populate: [
+        {
+          path: 'comments',
+          model: 'Comment',
+          populate: [{ path: 'author', model: 'User' }],
+        },
+      ],
+    })
+    .populate({
+      path: 'connections',
+      populate: [{ path: 'userA' }, { path: 'userB' }],
+    });
 }
 
 function allArtistsUser(limit, page) {

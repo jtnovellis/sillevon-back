@@ -10,4 +10,8 @@ function updateConnection(id, data) {
   );
 }
 
-module.exports = { createConnection, updateConnection };
+function deleteConnection(id) {
+  return Connection.findByIdAndDelete(id);
+}
+
+module.exports = { createConnection, updateConnection, deleteConnection };
