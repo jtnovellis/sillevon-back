@@ -3,6 +3,7 @@ const genre = require('./api/genre/genre.route');
 const post = require('./api/post/post.route');
 const comment = require('./api/comment/comment.route');
 const contract = require('./api/contract/contract.route');
+const connection = require('./api/connection/connection.route');
 
 const routesConfig = (app) => {
   app.use('/auth/local', user);
@@ -11,6 +12,7 @@ const routesConfig = (app) => {
   app.use('/api/posts', post);
   app.use('/api/comments', comment);
   app.use('/api/contracts', contract);
+  app.use('/api/connections', connection);
 };
 
 module.exports = { routesConfig };

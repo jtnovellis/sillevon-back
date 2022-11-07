@@ -86,6 +86,12 @@ const userSchema = new Schema(
     posts: {
       type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     },
+    contracts: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Contract' }],
+    },
+    connections: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Connection' }],
+    },
   },
   {
     timestamps: true,
