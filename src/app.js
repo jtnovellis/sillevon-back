@@ -8,14 +8,7 @@ const { routesConfig } = require('./routes.config');
 const app = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'PUT', 'POST', 'DELETE'],
-    credentials: true,
-    origin: true,
-  })
-);
+app.use(cors());
 app.use(morgan('dev'));
 
 connectDB();
