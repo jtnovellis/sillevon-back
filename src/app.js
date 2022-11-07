@@ -14,6 +14,7 @@ app.use(
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
     origin: true,
+    optionsSuccessStatus: 200,
   })
 );
 app.use(morgan('dev'));
