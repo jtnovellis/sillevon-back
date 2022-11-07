@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONT_VERCEL_URI,
+    origin: '*',
   })
 );
 app.use(morgan('dev'));
