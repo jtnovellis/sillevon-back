@@ -32,6 +32,8 @@ function dataOfUser(id) {
         populate: [{ path: 'author', model: 'User' }],
       },
     ],
+    path: 'connections',
+    populate: [{ path: 'userA' }, { path: 'userB' }],
   });
 }
 

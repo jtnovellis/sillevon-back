@@ -1,6 +1,10 @@
-const { createPost, getPostsByUser, updatePost } = require('./post.service');
+const {
+  createPost,
+  getPostsByUser,
+  getAllPosts,
+  updatePost,
+} = require('./post.service');
 const User = require('../user/user.model');
-const Post = require('./post.model');
 
 async function createPostHandler(req, res) {
   try {
@@ -37,8 +41,19 @@ async function updatePostHandler(req, res) {
   }
 }
 
+async function getAllPostsHandler(req, res) {
+  try {
+    const { limit, page } = req.query;
+    const posts = await getAllPosts(limit, page);
+    return res.status(200).json({ message: 'Posts found', data: posts });
+  } catch (e) {
+    return res.status(400).json({ message: 'Post not found', data: e });
+  }
+}
+
 module.exports = {
   createPostHandler,
   updatePostHandler,
   getPostsByUserHandler,
+  getAllPostsHandler,
 };
