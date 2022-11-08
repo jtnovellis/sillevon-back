@@ -1,5 +1,9 @@
 const User = require('../user/user.model');
-const { createConnection, updateConnection } = require('./connection.service');
+const {
+  createConnection,
+  updateConnection,
+  deleteConnection,
+} = require('./connection.service');
 
 async function createConnectionHandler(req, res) {
   try {
@@ -33,4 +37,30 @@ async function updateConnectionHandler(req, res) {
   }
 }
 
-module.exports = { createConnectionHandler, updateConnectionHandler };
+async function deleteConnectionHandler(req, res) {
+  try {
+    const { connectionId } = req.params;
+    const connection = await deleteConnection(connectionId);
+    const userA = await User.findById(connection.userA);
+    userA.connections = userA.connections.filter(
+      (item) => item._id !== connection._id
+    );
+    await userA.save({ validateBeforeSave: false });
+    const userB = await User.findById(connection.userB);
+    userB.connections = userB.connections.filter(
+      (item) => item._id !== connection._id
+    );
+    await userB.save({ validateBeforeSave: false });
+    return res
+      .status(200)
+      .json({ message: 'Connection deleted', data: connection });
+  } catch (e) {
+    return res.status(400).json({ message: 'Connection not deleted', data: e });
+  }
+}
+
+module.exports = {
+  createConnectionHandler,
+  updateConnectionHandler,
+  deleteConnectionHandler,
+};
