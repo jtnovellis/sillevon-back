@@ -7,11 +7,7 @@ const { routesConfig } = require('./routes.config');
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://sillevon.vercel.app'],
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
