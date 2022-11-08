@@ -8,7 +8,7 @@ const { routesConfig } = require('./routes.config');
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: 'https://sillevon.vercel.app' }));
 app.use(morgan('dev'));
 
 connectDB();
