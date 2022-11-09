@@ -5,9 +5,9 @@ function createConnection(userA, userB) {
 }
 
 function updateConnection(id, data) {
-  return Connection.findByIdAndUpdate(id, data, { new: true }).populate(
-    'userB'
-  );
+  return Connection.findByIdAndUpdate(id, data, { new: true })
+    .populate('userB')
+    .populate('userA');
 }
 
 function deleteConnection(id) {

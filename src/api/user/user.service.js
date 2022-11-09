@@ -37,6 +37,10 @@ function dataOfUser(id) {
     .populate({
       path: 'connections',
       populate: [{ path: 'userA' }, { path: 'userB' }],
+    })
+    .populate({
+      path: 'contracts',
+      populate: [{ path: 'client' }, { path: 'artist' }],
     });
 }
 

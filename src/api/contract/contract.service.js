@@ -1,15 +1,23 @@
 const Contract = require('./contract.model');
 
-function createContract(data, clientId, artistId) {
-  return Contract.create({ ...data, client: clientId, artist: artistId });
+function createContract(name, clientId, artistId) {
+  return Contract.create({
+    contractName: name,
+    client: clientId,
+    artist: artistId,
+  });
 }
 
 function updateContract(id, data) {
-  return Contract.findByIdAndUpdate(id, data, { new: true });
+  return Contract.findByIdAndUpdate(id, data, { new: true })
+    .populate('client')
+    .populate('artist');
 }
 
-function getContract(id) {
-  return Contract.findById(id);
+function getContracts(name) {
+  return Contract.find({ contractName: name })
+    .populate('client')
+    .populate('artist');
 }
 
-module.exports = { createContract, updateContract, getContract };
+module.exports = { createContract, updateContract, getContracts };
