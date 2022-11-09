@@ -94,7 +94,9 @@ async function getContractHandler(req, res) {
       .status(200)
       .json({ message: 'Contracts found', data: contracts });
   } catch (e) {
-    return res.status(400).json({ message: 'Contracts not found', data: e });
+    return res
+      .status(400)
+      .json({ message: 'Contracts could not been found', data: e });
   }
 }
 
