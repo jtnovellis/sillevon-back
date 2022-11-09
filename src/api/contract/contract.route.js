@@ -5,6 +5,7 @@ const {
   getContractHandler,
   createCheckout,
   lastUpdateContractHandler,
+  acceptContractHandler,
 } = require('./contract.controller');
 const { authenticate } = require('../../utils/auth');
 
@@ -13,6 +14,7 @@ const router = express.Router();
 router.post('/new', authenticate, createContractHandler);
 router.put('/update', authenticate, updateContractHandler);
 router.put('/last-update', authenticate, lastUpdateContractHandler);
+router.put('/accept/:contractId', authenticate, acceptContractHandler);
 router.get('/by-name/:contractName', authenticate, getContractHandler);
 router.post('/create-payment-intent', authenticate, createCheckout);
 

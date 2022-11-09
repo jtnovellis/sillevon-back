@@ -47,7 +47,7 @@ async function updateContractHandler(req, res) {
   try {
     for (let i = 0; i < contracts.length; i++) {
       const contractId = contracts[i]._id;
-      const contract = updateContract(contractId, newData);
+      const contract = await updateContract(contractId, newData);
       newContracts = [...newContracts, contract];
     }
     return res
@@ -73,7 +73,7 @@ async function lastUpdateContractHandler(req, res) {
   try {
     for (let i = 0; i < contracts.length; i++) {
       const contractId = contracts[i]._id;
-      const contract = updateContract(contractId, newData);
+      const contract = await updateContract(contractId, newData);
       newContracts = [...newContracts, contract];
     }
     return res
@@ -98,11 +98,30 @@ async function getContractHandler(req, res) {
   }
 }
 
+async function acceptContractHandler(req, res) {
+  const { contractId } = req.params;
+  const { isAccepted } = req.body;
+  try {
+    const contract = await updateContract(contractId, { isAccepted });
+    return res
+      .status(200)
+      .json({ message: 'Contracts updated', data: contract });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: 'Contract could not been updated', data: e });
+  }
+}
+
 async function createCheckout(req, res) {
   const { contracts } = req.body;
+  for (let i = 0; i < contracts.length; i++) {
+    const element = contracts[i]._id;
+    await updateContract(element, { isPaid: true });
+  }
   const calculateOrderAmount = (ctrs) => {
     const total = ctrs[0].price;
-    return total;
+    return total * 100;
   };
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(contracts),
@@ -122,4 +141,5 @@ module.exports = {
   getContractHandler,
   createCheckout,
   lastUpdateContractHandler,
+  acceptContractHandler,
 };
