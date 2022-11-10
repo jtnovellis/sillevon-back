@@ -5,6 +5,11 @@ const {
 } = require('./contract.service');
 const User = require('../user/user.model');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const {
+  transporter,
+  contractConfirmation,
+  contractAlert,
+} = require('../../utils/mailer');
 
 async function createContractHandler(req, res) {
   let contracts = [];
@@ -24,6 +29,7 @@ async function createContractHandler(req, res) {
       client.contracts.push(contract);
       await client.save({ validateBeforeSave: false });
       contracts = [...contracts, contract];
+      await transporter.sendMail(contractAlert(client, artist));
     }
     return res
       .status(201)
@@ -119,7 +125,10 @@ async function createCheckout(req, res) {
   const { contracts } = req.body;
   for (let i = 0; i < contracts.length; i++) {
     const element = contracts[i]._id;
-    await updateContract(element, { isPaid: true });
+    const contract = await updateContract(element, { isPaid: true });
+    const artist = contract.artist;
+    const client = contract.client;
+    await transporter.sendMail(contractConfirmation(client, artist));
   }
   const calculateOrderAmount = (ctrs) => {
     const total = ctrs[0].price;

@@ -8,12 +8,14 @@ const {
   dataOfUserHandler,
   allArtistsUserHandler,
   filteredArtistHandler,
+  thirdPartAuthenticatio,
 } = require('./user.controller');
 const { formData } = require('../../utils/formData');
 const { authenticate } = require('../../utils/auth');
 
 const router = Router();
 
+router.post('/auth0', thirdPartAuthenticatio);
 router.post('/signup', signUpHandle);
 router.post('/signin', signInHandle);
 router.post('/update/form-data', authenticate, formData, updatePhotoshandler);

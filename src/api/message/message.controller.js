@@ -15,8 +15,13 @@ async function allMessagesHandler(req, res) {
   const { receiverId } = req.params;
   const id = req.user;
   try {
-    const messages = await allMessages(id, receiverId);
-    return res.status(200).json({ message: 'Messages found', data: messages });
+    const messagesFromTo = await allMessages(id, receiverId);
+    const messagesToFrom = await allMessages(receiverId, id);
+    const messages = [...messagesFromTo, ...messagesToFrom];
+    const orderedMessages = messages.sort((a, b) => a.createdAt - b.createdAt);
+    return res
+      .status(200)
+      .json({ message: 'Messages found', data: orderedMessages });
   } catch (e) {
     return res.status(400).json({ message: 'Messages not found', data: e });
   }

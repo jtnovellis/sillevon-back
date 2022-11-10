@@ -4,6 +4,11 @@ const {
   updateConnection,
   deleteConnection,
 } = require('./connection.service');
+const {
+  transporter,
+  connectionConfirmation,
+  connectionRequest,
+} = require('../../utils/mailer');
 
 async function createConnectionHandler(req, res) {
   try {
@@ -16,6 +21,7 @@ async function createConnectionHandler(req, res) {
     await userA.save({ validateBeforeSave: false });
     userB.connections.push(connection);
     await userB.save({ validateBeforeSave: false });
+    await transporter.sendMail(connectionRequest(userB, userA));
     return res
       .status(201)
       .json({ message: 'Connection created', data: connection });
@@ -29,6 +35,9 @@ async function updateConnectionHandler(req, res) {
     const data = req.body;
     const { connectionId } = req.params;
     const connection = await updateConnection(connectionId, data);
+    const client = connection.userA;
+    const artist = connection.userB;
+    await transporter.sendMail(connectionConfirmation(artist, client));
     return res
       .status(200)
       .json({ message: 'Connection updated', data: connection });

@@ -1,11 +1,6 @@
 const { Schema, model, models } = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-/* const passwordRegex =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
-
-  match: [passwordRegex, 'Special character, number and capital letter'],
- */
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
@@ -41,7 +36,7 @@ const userSchema = new Schema(
     },
     terms: {
       type: Boolean,
-      required: true,
+      required: false,
       default: false,
     },
     mode: {

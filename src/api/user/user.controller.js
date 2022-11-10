@@ -10,6 +10,7 @@ const {
 } = require('./user.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { transporter, welcome } = require('../../utils/mailer');
 
 async function dataOfUserHandler(req, res) {
   try {
@@ -29,6 +30,7 @@ const signUpHandle = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: 60000,
     });
+    await transporter.sendMail(welcome(user));
     return res.status(201).json({
       message: 'User created successfully',
       data: {
@@ -150,7 +152,7 @@ async function filteredArtistHandler(req, res) {
   const { city, limit, page, price, instrument, genre } = req.query;
   try {
     const artists = await filteredArtist(city, limit, page, instrument, genre);
-    if (price) {
+    if (price[0] > 0 && price[1] > 0) {
       const priceParsed = JSON.parse(price);
       const byPrice = artists.docs.filter(
         (artist) =>
@@ -167,6 +169,71 @@ async function filteredArtistHandler(req, res) {
   }
 }
 
+async function thirdPartAuthenticatio(req, res) {
+  const { email, name } = req.body;
+  try {
+    const exitingUser = await signIn(email);
+    if (!exitingUser) {
+      const encPassword = await bcrypt.hash(email, 10);
+      const user = await signUp({ email, name }, encPassword);
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: 60000,
+      });
+      await transporter.sendMail(welcome(user));
+      return res.status(201).json({
+        message: 'User created successfully',
+        data: {
+          email: user.email,
+          token,
+          name: user.name,
+          imagesDone: user.imagesDone,
+          new: true,
+        },
+      });
+    } else {
+      const token = jwt.sign(
+        { id: exitingUser._id },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: 60000,
+        }
+      );
+      if (exitingUser.mode === 'customer') {
+        return res.status(200).json({
+          message: 'Login successfully',
+          data: {
+            token,
+            email: exitingUser.email,
+            name: exitingUser.name,
+            imagesDone: exitingUser.imagesDone,
+            mode: exitingUser.mode,
+            new: false,
+          },
+        });
+      } else {
+        return res.status(200).json({
+          message: 'Login successfully',
+          data: {
+            token,
+            email: exitingUser.email,
+            name: exitingUser.name,
+            imagesDone: exitingUser.imagesDone,
+            skills: exitingUser.skills,
+            location: exitingUser.location,
+            mode: exitingUser.mode,
+            city: exitingUser.city,
+            new: false,
+          },
+        });
+      }
+    }
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ message: 'User could not be created', data: err });
+  }
+}
+
 module.exports = {
   signInHandle,
   oneUserHandler,
@@ -175,5 +242,6 @@ module.exports = {
   filteredArtistHandler,
   updatePhotoshandler,
   updateUserDataHandler,
+  thirdPartAuthenticatio,
   allArtistsUserHandler,
 };
