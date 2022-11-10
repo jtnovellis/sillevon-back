@@ -11,11 +11,7 @@ const SokectServer = Server;
 const app = express();
 const server = http.createServer(app);
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://sillevon.vercel.app'],
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
