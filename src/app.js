@@ -20,7 +20,10 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 const io = new SokectServer(server, {
-  cors: { origin: 'https://sillevon.vercel.app' },
+  cors: {
+    origin: ['http://localhost:3000', 'https://sillevon.vercel.app'],
+    credentials: true,
+  },
 });
 
 global.onlineUsers = new Map();
