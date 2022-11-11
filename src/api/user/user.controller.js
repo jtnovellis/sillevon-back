@@ -6,7 +6,9 @@ const {
   filteredArtist,
   dataOfUser,
   updateUserData,
+  updateRegularData,
   allArtistsUser,
+  updateAvatar,
 } = require('./user.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -234,14 +236,41 @@ async function thirdPartAuthenticatio(req, res) {
   }
 }
 
+async function updateAvatarHandler(req, res) {
+  const id = req.user;
+  const data = req.body;
+  try {
+    const user = await updateAvatar(id, data);
+    return res.status(200).json({ message: 'User updated', data: user });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: 'User could not been updated', data: e });
+  }
+}
+async function updateRegularDataHandler(req, res) {
+  const id = req.user;
+  const data = req.body;
+  try {
+    const user = await updateRegularData(id, data);
+    return res.status(200).json({ message: 'User updated', data: user });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: 'User could not been updated', data: e });
+  }
+}
+
 module.exports = {
   signInHandle,
   oneUserHandler,
   dataOfUserHandler,
+  updateRegularDataHandler,
   signUpHandle,
   filteredArtistHandler,
   updatePhotoshandler,
   updateUserDataHandler,
   thirdPartAuthenticatio,
   allArtistsUserHandler,
+  updateAvatarHandler,
 };

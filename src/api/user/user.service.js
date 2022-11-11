@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const bcrypt = require('bcrypt');
 
 const signUp = (user, encPassword) => {
   return User.create({ ...user, password: encPassword });
@@ -16,6 +17,23 @@ const updateUserPhotos = async (data) => {
     { imagesDone: { avatar, background } },
     { new: true }
   );
+};
+const updateAvatar = async (id, data) => {
+  const { avatar } = data;
+  return await User.findByIdAndUpdate(
+    id,
+    { imagesDone: { avatar } },
+    { new: true }
+  );
+};
+const updateRegularData = async (id, data) => {
+  const { name, password } = data;
+  if (name) {
+    return User.findByIdAndUpdate(id, { name }, { new: true });
+  } else if (password) {
+    const encPassword = await bcrypt.hash(password, 10);
+    return User.findByIdAndUpdate(id, { password: encPassword }, { new: true });
+  }
 };
 
 const updateUserData = (id, data) => {
@@ -130,10 +148,12 @@ function filteredArtist(city, limit, page, instrument, genre) {
 module.exports = {
   signUp,
   dataOfUser,
+  updateRegularData,
   signIn,
   updateUserPhotos,
   filteredArtist,
   updateUserData,
   oneUser,
   allArtistsUser,
+  updateAvatar,
 };
