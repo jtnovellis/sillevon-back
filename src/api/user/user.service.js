@@ -71,6 +71,9 @@ function allArtistsUser(limit, page) {
     }
   );
 }
+function allArtists() {
+  return User.find({ mode: 'artist/band' }).populate('connections');
+}
 
 function oneUser(email) {
   return User.findOne({ email }).populate({
@@ -155,5 +158,6 @@ module.exports = {
   updateUserData,
   oneUser,
   allArtistsUser,
+  allArtists,
   updateAvatar,
 };

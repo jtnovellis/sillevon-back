@@ -10,6 +10,7 @@ const {
   filteredArtistHandler,
   updateRegularDataHandler,
   thirdPartAuthenticatio,
+  allArtistsHandler,
   updateAvatarHandler,
 } = require('./user.controller');
 const { formData } = require('../../utils/formData');
@@ -26,6 +27,7 @@ router.put('/update-regular', authenticate, updateRegularDataHandler);
 router.put('/update', authenticate, updateUserDataHandler);
 router.get('/datauser', authenticate, dataOfUserHandler);
 router.get('/artist-recomended-data', allArtistsUserHandler);
+router.get('/artist-recomended', allArtistsHandler);
 router.get('/artist-initial-data', allArtistsUserHandler);
 router.get('/artist-email/:email', oneUserHandler);
 router.get('/filtered-artists', filteredArtistHandler);

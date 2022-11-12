@@ -8,6 +8,7 @@ const {
   updateUserData,
   updateRegularData,
   allArtistsUser,
+  allArtists,
   updateAvatar,
 } = require('./user.service');
 const jwt = require('jsonwebtoken');
@@ -260,10 +261,23 @@ async function updateRegularDataHandler(req, res) {
       .json({ message: 'User could not been updated', data: e });
   }
 }
+async function allArtistsHandler(req, res) {
+  try {
+    const artists = await allArtists();
+    return res
+      .status(200)
+      .json({ message: 'All artists found', data: artists });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: 'Artists not could been found', data: e });
+  }
+}
 
 module.exports = {
   signInHandle,
   oneUserHandler,
+  allArtistsHandler,
   dataOfUserHandler,
   updateRegularDataHandler,
   signUpHandle,
