@@ -1,3 +1,4 @@
+const User = require('../user/user.model');
 const Contract = require('./contract.model');
 
 function createContract(name, clientId, artistId) {
@@ -20,4 +21,20 @@ function getContracts(name) {
     .populate('artist');
 }
 
-module.exports = { createContract, updateContract, getContracts };
+async function deleteContract(contractId, clientId) {
+  const contract = await Contract.findById(contractId);
+  const client = await User.findById(clientId);
+  client.contracts.filter((item) => item._id !== contract._id);
+  await client.save({ validateBeforeSave: false });
+  const artist = await User.findById(contract.artist._id);
+  artist.contracts.filter((item) => item._id !== contractId);
+  await artist.save({ validateBeforeSave: false });
+  return Contract.findByIdAndDelete(contractId);
+}
+
+module.exports = {
+  createContract,
+  updateContract,
+  getContracts,
+  deleteContract,
+};

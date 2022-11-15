@@ -6,6 +6,7 @@ const {
   createCheckout,
   lastUpdateContractHandler,
   acceptContractHandler,
+  deleteContractHandler,
 } = require('./contract.controller');
 const { authenticate } = require('../../utils/auth');
 
@@ -17,5 +18,6 @@ router.put('/last-update', authenticate, lastUpdateContractHandler);
 router.put('/accept/:contractId', authenticate, acceptContractHandler);
 router.get('/by-name/:contractName', authenticate, getContractHandler);
 router.post('/create-payment-intent', authenticate, createCheckout);
+router.delete('/delete/:contractId', authenticate, deleteContractHandler);
 
 module.exports = router;

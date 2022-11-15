@@ -145,6 +145,14 @@ function filteredArtist(city, limit, page, instrument, genre) {
         page: parseInt(page) || 1,
       }
     );
+  } else {
+    return User.paginate(
+      { mode: 'artist/band' },
+      {
+        limit: parseInt(limit) || 10,
+        page: parseInt(page) || 1,
+      }
+    );
   }
 }
 
