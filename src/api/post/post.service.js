@@ -12,6 +12,7 @@ function getAllPosts(limit, page) {
   return Post.paginate(
     {},
     {
+      sort: '-createdAt',
       limit: limit || 20,
       page: page || 1,
       populate: [

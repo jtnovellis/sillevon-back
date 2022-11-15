@@ -2,6 +2,7 @@ const {
   createContract,
   updateContract,
   getContracts,
+  deleteContract,
 } = require('./contract.service');
 const User = require('../user/user.model');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -146,6 +147,21 @@ async function createCheckout(req, res) {
   });
 }
 
+async function deleteContractHandler(req, res) {
+  const id = req.user;
+  const { contractId } = req.params;
+  try {
+    const contract = await deleteContract(contractId, id);
+    return res
+      .status(200)
+      .json({ message: 'Contract deleted', data: contract });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: 'Contract could not been deleted', data: e });
+  }
+}
+
 module.exports = {
   createContractHandler,
   updateContractHandler,
@@ -153,4 +169,5 @@ module.exports = {
   createCheckout,
   lastUpdateContractHandler,
   acceptContractHandler,
+  deleteContractHandler,
 };

@@ -155,8 +155,8 @@ async function filteredArtistHandler(req, res) {
   const { city, limit, page, price, instrument, genre } = req.query;
   try {
     const artists = await filteredArtist(city, limit, page, instrument, genre);
-    if (price[0] > 0 && price[1] > 0) {
-      const priceParsed = JSON.parse(price);
+    const priceParsed = JSON.parse(price);
+    if (priceParsed[0] > 0 && priceParsed[1] > 0) {
       const byPrice = artists.docs.filter(
         (artist) =>
           artist.price >= priceParsed[0] && artist.price <= priceParsed[1]
