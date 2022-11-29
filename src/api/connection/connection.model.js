@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const connectionSchema = new Schema(
   {
@@ -21,8 +21,8 @@ const connectionSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-const Connection = model('Connection', connectionSchema);
+const Connection = model('Connection', connectionSchema)
 
-module.exports = Connection;
+module.exports = Connection

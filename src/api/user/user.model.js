@@ -1,7 +1,7 @@
-const { Schema, model, models } = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
+const { Schema, model, models } = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
 const userSchema = new Schema(
   {
@@ -20,10 +20,10 @@ const userSchema = new Schema(
         {
           async validator(value) {
             try {
-              const user = await models.User.findOne({ email: value });
-              return !user;
+              const user = await models.User.findOne({ email: value })
+              return !user
             } catch {
-              return false;
+              return false
             }
           },
           message: 'It is already exist a user with this email',
@@ -92,9 +92,9 @@ const userSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-userSchema.plugin(mongoosePaginate);
-const User = model('User', userSchema);
+userSchema.plugin(mongoosePaginate)
+const User = model('User', userSchema)
 
-module.exports = User;
+module.exports = User

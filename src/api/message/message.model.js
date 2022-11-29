@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
+const { Schema, model } = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const messageSchema = new Schema(
   {
@@ -22,9 +22,9 @@ const messageSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-messageSchema.plugin(mongoosePaginate);
-const Message = model('Message', messageSchema);
+messageSchema.plugin(mongoosePaginate)
+const Message = model('Message', messageSchema)
 
-module.exports = Message;
+module.exports = Message
