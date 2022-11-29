@@ -1,11 +1,11 @@
-const Post = require('./post.model');
+const Post = require('./post.model')
 
 function createPost(data, userId) {
-  return Post.create({ ...data, user: userId });
+  return Post.create({ ...data, user: userId })
 }
 
 function getPostsByUser(userId) {
-  return Post.find({ user: userId });
+  return Post.find({ user: userId })
 }
 
 function getAllPosts(limit, page) {
@@ -24,11 +24,11 @@ function getAllPosts(limit, page) {
         { path: 'user', model: 'User' },
       ],
     }
-  );
+  )
 }
 
 function updatePost(id, data) {
-  return Post.findByIdAndUpdate(id, data, { new: true });
+  return Post.findByIdAndUpdate(id, data, { new: true })
 }
 
-module.exports = { createPost, getPostsByUser, updatePost, getAllPosts };
+module.exports = { createPost, getPostsByUser, updatePost, getAllPosts }

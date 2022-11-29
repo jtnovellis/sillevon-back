@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const genreSchema = new Schema(
   {
@@ -9,8 +9,8 @@ const genreSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-const Genre = model('Genre', genreSchema);
+const Genre = model('Genre', genreSchema)
 
-module.exports = Genre;
+module.exports = Genre

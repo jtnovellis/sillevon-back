@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const contractSchema = new Schema(
   {
@@ -52,8 +52,8 @@ const contractSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-const Contract = model('Contract', contractSchema);
+const Contract = model('Contract', contractSchema)
 
-module.exports = Contract;
+module.exports = Contract

@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const planSchema = new Schema(
   {
@@ -28,8 +28,8 @@ const planSchema = new Schema(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-const Plan = model('Plan', planSchema);
+const Plan = model('Plan', planSchema)
 
-module.exports = Plan;
+module.exports = Plan

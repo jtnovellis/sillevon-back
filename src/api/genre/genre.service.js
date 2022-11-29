@@ -1,23 +1,23 @@
-const Genre = require('./genre.model');
+const Genre = require('./genre.model')
 
 function createGenre(genre) {
-  return Genre.create(genre);
+  return Genre.create(genre)
 }
 
 function getAllGenres() {
-  return Genre.find({});
+  return Genre.find({})
 }
 
 function getOneGenre(genre) {
-  return Genre.findOne({ title: genre });
+  return Genre.findOne({ title: genre })
 }
 
 function updateGenre(id, genre) {
-  return Genre.findByIdAndUpdate(id, genre, { new: true });
+  return Genre.findByIdAndUpdate(id, genre, { new: true })
 }
 
 function deleteGenre(id) {
-  return Genre.findByIdAndRemove(id);
+  return Genre.findByIdAndRemove(id)
 }
 
 module.exports = {
@@ -26,4 +26,4 @@ module.exports = {
   getOneGenre,
   updateGenre,
   deleteGenre,
-};
+}

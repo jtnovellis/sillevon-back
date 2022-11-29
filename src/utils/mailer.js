@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -8,14 +8,14 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
-});
+})
 
 const verify = async (transporter) => {
-  const connection = await transporter.verify();
+  const connection = await transporter.verify()
   if (connection) {
-    console.log('Server is ready to take our messages');
+    console.log('Server is ready to take our messages')
   }
-};
+}
 
 const welcome = (user) => {
   return {
@@ -31,8 +31,8 @@ const welcome = (user) => {
     </body>
   `,
     text: `Welcome ${user.name}`,
-  };
-};
+  }
+}
 
 const contractAlert = (client, artist) => {
   return {
@@ -48,8 +48,8 @@ const contractAlert = (client, artist) => {
     </body>
   `,
     text: `Go to your profile, you have notifications ${artist.name}`,
-  };
-};
+  }
+}
 const contractConfirmation = (client, artist) => {
   return {
     from: `"${process.env.SMTP_USERNAME}"<${process.env.SMTP_USER}`,
@@ -64,8 +64,8 @@ const contractConfirmation = (client, artist) => {
     </body>
   `,
     text: `Go to your profile, you have notifications ${artist.name}`,
-  };
-};
+  }
+}
 
 const connectionRequest = (artist, client) => {
   return {
@@ -81,8 +81,8 @@ const connectionRequest = (artist, client) => {
     </body>
   `,
     text: `Go to your profile, you have notifications, ${artist.name}`,
-  };
-};
+  }
+}
 
 const connectionConfirmation = (artist, client) => {
   return {
@@ -98,8 +98,8 @@ const connectionConfirmation = (artist, client) => {
     </body>
   `,
     text: `Go to your profile, you have notifications ${client.name}`,
-  };
-};
+  }
+}
 
 module.exports = {
   transporter,
@@ -109,4 +109,4 @@ module.exports = {
   connectionConfirmation,
   contractConfirmation,
   connectionRequest,
-};
+}
